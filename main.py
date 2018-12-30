@@ -58,45 +58,64 @@ trinary_to_char = dict((v, k) for k, v in char_to_trinary.items())
 
 # print(trinary_to_char)
 
+
 def trinary_encoder(inputs):
     return "".join([char_to_trinary[i] for i in list(str(inputs).lower())])
 
+
 # print(trinary_encoder("BooomBOOOOM"))
+
 
 def trinary_decoder(inp):
     chars = [str(inp)[i : i + 6] for i in range(0, len(inp), 6)]
     return "".join([trinary_to_char[i] for i in chars])
 
+
 # print(trinary_decoder("002111000222000222000222000022002111000222000222000222000222000022"))
 
-separator = '/'
+separator = "/"
 
-trinary_to_morse = {'1': '.', '2': '-', '0': separator}
+trinary_to_morse = {"1": ".", "2": "-", "0": separator}
 morse_to_trinary = dict((v, k) for k, v in trinary_to_morse.items())
+
 
 def trinary2morse(inp):
 
-    chars = [int(str(inp)[i : i + 6]) for i in range(0, len(inp), 6)]   # strip down all zeros in the beginning
-    morse = [ ''.join([trinary_to_morse[i] for i in str(char)]) for char in chars]
+    chars = [
+        int(str(inp)[i : i + 6]) for i in range(0, len(inp), 6)
+    ]  # strip down all zeros in the beginning
+    morse = ["".join([trinary_to_morse[i] for i in str(char)]) for char in chars]
 
-    return ' '.join(morse) # joining with ' ' provides the space between two chars
+    return " ".join(morse)  # joining with ' ' provides the space between two chars
+
 
 # print(trinary2morse(trinary_encoder('SOS Notice Me Senpai.')))
 
+
 def morse2trinary(inp):
 
-    chars = inp.split() # splits stuff with space
+    chars = inp.split()  # splits stuff with space
     trinary = ["".join([morse_to_trinary[i] for i in str(char)]) for char in chars]
-    trinary = ['{0:06d}'.format(int(n)) for n in trinary] # add the leading zeroes back again.
+    trinary = [
+        "{0:06d}".format(int(n)) for n in trinary
+    ]  # add the leading zeroes back again.
 
-    return ''.join(trinary)
+    return "".join(trinary)
+
 
 # print(trinary_decoder(morse2trinary('... --- ... / -. --- - .. -.-. . / -- . / ... . -. .--. .- .. .-.-.-')))
 
 text_to_morse = lambda x: trinary2morse(trinary_encoder(x))
 morse_to_text = lambda x: trinary_decoder(morse_to_trinary(x))
 
-choices = {1: trinary_encoder, 2: trinary_decoder, 3: trinary2morse, 4: morse2trinary, 5: text_to_morse, 6: morse_to_text}
+choices = {
+    1: trinary_encoder,
+    2: trinary_decoder,
+    3: trinary2morse,
+    4: morse2trinary,
+    5: text_to_morse,
+    6: morse_to_text,
+}
 
 
 def prompter():
@@ -113,7 +132,7 @@ def prompter():
         """
     )
     choice = int(input("Enter the number for your chosen option: "))
-    assert(choice in range(1, 7))
+    assert choice in range(1, 7)
 
     inp = str(input("Enter the text: "))
     return choices[choice](inp)
