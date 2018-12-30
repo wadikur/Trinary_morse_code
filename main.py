@@ -93,49 +93,44 @@ def morse2trinary(inp):
 
 # print(trinary_decoder(morse2trinary('... --- ... / -. --- - .. -.-. . / -- . / ... . -. .--. .- .. .-.-.-')))
 
-def main_function():
+text_to_morse = lambda x: trinary2morse(trinary_encoder(x))
+morse_to_text = lambda x: trinary_decoder(morse_to_trinary(x))
+
+choices = {1: trinary_encoder, 2: trinary_decoder, 3: trinary2morse, 4: morse2trinary, 5: text_to_morse, 6: morse_to_text}
+
+
+def prompter():
     print(
-        """Welcome to the Trinary morse endcoder.
+        """Welcome to the Trinary-Text-Morse Encoder-Decoder.
             Make sure to enter everything in string format.
             Chose an option first.
-            1. Text to trinary : 'a'
-            2. Trinary to text : 'b'
-            3. Trinary to morse: 'c'
-            4. Morse to trinary: 'd'
-            5. Text to morse   : 'e'
-            6. Morse to text   : 'f' """
+            1. Text to trinary
+            2. Trinary to text
+            3. Trinary to morse
+            4. Morse to trinary
+            5. Text to morse
+            6. Morse to text
+        """
     )
-    function = str(input("Enter what you want to do: "))
-    function = function.lower()
-    user_input = str(input("Enter the text: "))
-    if function == "a":
-        return trinary_encoder(user_input)
-    elif function == "b":
-        return trinary_decoder(user_input)
-    elif function == "c":
-        return trinary2morse(user_input)
-    elif function == "d":
-        return morse2trinary(user_input)
-    elif function == "e":
-        return trinary2morse(trinary_encoder(user_input))
-    elif function == "f":
-        return trinary_decoder(morse2trinary(user_input))
-    else:
-        return None
+    choice = int(input("Enter the number for your chosen option: "))
+    assert(choice in range(1, 7))
+
+    inp = str(input("Enter the text: "))
+    return choices[choice](inp)
 
 
 while True:
-    output = main_function()
+    output = prompter()
     print(output)
     if output:
         confirmation = str(input("Do you want another round? y/n: "))
         if confirmation in ["N", "n", "no", "No", "NO"]:
             break
         elif confirmation in ["y", "Y", "yes", "Yes"]:
-            None
+            pass
         else:
             print("Choose a valid option")
             break
     else:
-        print("something wrong, try again.")
+        print("Something wrong, try again.")
         break
