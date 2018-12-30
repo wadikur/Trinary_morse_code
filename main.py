@@ -56,22 +56,15 @@ char_to_trinary = {
 
 trinary_to_char = dict((v, k) for k, v in char_to_trinary.items())
 
-# print(trinary_to_char)
-
 
 def trinary_encoder(inputs):
     return "".join([char_to_trinary[i] for i in list(str(inputs).lower())])
-
-
-# print(trinary_encoder("BooomBOOOOM"))
 
 
 def trinary_decoder(inp):
     chars = [str(inp)[i : i + 6] for i in range(0, len(inp), 6)]
     return "".join([trinary_to_char[i] for i in chars])
 
-
-# print(trinary_decoder("002111000222000222000222000022002111000222000222000222000222000022"))
 
 separator = "/"
 
@@ -89,9 +82,6 @@ def trinary2morse(inp):
     return " ".join(morse)  # joining with ' ' provides the space between two chars
 
 
-# print(trinary2morse(trinary_encoder('SOS Notice Me Senpai.')))
-
-
 def morse2trinary(inp):
 
     chars = inp.split()  # splits stuff with space
@@ -102,8 +92,6 @@ def morse2trinary(inp):
 
     return "".join(trinary)
 
-
-# print(trinary_decoder(morse2trinary('... --- ... / -. --- - .. -.-. . / -- . / ... . -. .--. .- .. .-.-.-')))
 
 text_to_morse = lambda x: trinary2morse(trinary_encoder(x))
 morse_to_text = lambda x: trinary_decoder(morse_to_trinary(x))
@@ -144,6 +132,7 @@ while True:
     if output:
         confirmation = str(input("Do you want another round? y/n: "))
         if confirmation in ["N", "n", "no", "No", "NO"]:
+            print("Thanks for trying this little program. Bye!")
             break
         elif confirmation in ["y", "Y", "yes", "Yes"]:
             pass
@@ -151,5 +140,5 @@ while True:
             print("Choose a valid option")
             break
     else:
-        print("Something wrong, try again.")
+        print("Something went wrong, try again.")
         break
